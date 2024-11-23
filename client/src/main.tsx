@@ -7,10 +7,13 @@ import App from './App.jsx';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 
+console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
+
 // Apollo Client setup
 const httpLink = createHttpLink({
   uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`, // Append /graphql
 });
+
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
