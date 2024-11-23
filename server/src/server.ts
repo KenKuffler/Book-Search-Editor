@@ -17,7 +17,12 @@ console.log('JWT_SECRET_KEY:', process.env.JWT_SECRET_KEY);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: 'http://localhost:3000' })); // Allow requests from the client
+const allowedOrigins = [process.env.CLIENT_ORIGIN || 'http://localhost:3000'];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // Ensure cookies are passed
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

@@ -8,12 +8,12 @@ import App from './App.jsx';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 
+// Apollo Client setup
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql', // Server GraphQL endpoint
+  uri: import.meta.env.VITE_API_BASE_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
-  // Retrieve the token from localStorage or other storage mechanism
   const token = localStorage.getItem('id_token');
   return {
     headers: {
@@ -24,7 +24,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink), // Combine authLink with httpLink
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -51,5 +51,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <RouterProvider router={router} />
   </ApolloProvider>
 );
+
 
 
