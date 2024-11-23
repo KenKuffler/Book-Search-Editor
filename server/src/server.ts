@@ -27,22 +27,22 @@ const allowedOrigins =
     ? ['https://book-search-editor-1.onrender.com']
     : ['https://book-search-editor-1.onrender.com', 'http://localhost:3000'];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-        console.log('Origin:', origin);
-      } else {
-        callback(new Error(`CORS error: Origin ${origin} not allowed`));
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  })
-);
+    app.use(
+      cors({
+        origin: (origin, callback) => {
+          console.log('Origin:', origin);
 
-
+          if (!origin || allowedOrigins.includes(origin)) {
+            // Allow requests with no origin (server-to-server or local tools)
+            callback(null, true);
+          } else {
+            callback(new Error(`CORS error: Origin ${origin} not allowed`));
+          }
+        },
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+      })
+    );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
