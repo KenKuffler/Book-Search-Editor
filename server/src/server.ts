@@ -10,6 +10,8 @@ import resolvers from './graphql/resolvers.js';
 import dotenv from 'dotenv';
 import { verifyToken } from './services/auth.js';
 import cors from 'cors';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from '@apollo/server-plugin-landing-page-graphql-playground';
+
 
 dotenv.config();
 console.log('JWT_SECRET_KEY:', process.env.JWT_SECRET_KEY);
@@ -46,7 +48,12 @@ console.log('🔧 Starting Apollo Server setup...');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true, // Allows introspection queries in production
+  plugins: [
+    ApolloServerPluginLandingPageGraphQLPlayground(), // Enables GraphQL Playground
+  ],
 });
+
 
 await server.start();
 
