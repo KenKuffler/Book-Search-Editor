@@ -1,8 +1,8 @@
 import { gql, ApolloClient, InMemoryCache } from '@apollo/client';
 
-// Apollo Client configuration
+// Use the environment variable for the GraphQL endpoint
 const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql', // Back-end GraphQL endpoint
+  uri: import.meta.env.VITE_API_BASE_URL + '/graphql', // Use the correct environment variable
   cache: new InMemoryCache(),
 });
 
@@ -44,5 +44,6 @@ export const getMe = async (token: string) => {
     throw new Error('Failed to fetch user data'); // Throwing a user-friendly error
   }
 };
+
 
 
