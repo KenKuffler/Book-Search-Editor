@@ -20,12 +20,13 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = [process.env.CLIENT_ORIGIN || 'http://localhost:3000'];
-
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true, // Ensure cookies are passed
-}));
+app.use(
+  cors({
+    origin: 'https://book-search-editor-1.onrender.com', // Replace with your frontend's Render URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
