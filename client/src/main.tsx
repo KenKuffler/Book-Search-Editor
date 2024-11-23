@@ -3,14 +3,13 @@ import { setContext } from '@apollo/client/link/context';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import App from './App.jsx';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 
 // Apollo Client setup
 const httpLink = createHttpLink({
-  uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`, // Explicitly append /graphql
+  uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`, // Append /graphql
 });
 
 const authLink = setContext((_, { headers }) => {
