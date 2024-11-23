@@ -10,7 +10,7 @@ import SavedBooks from './pages/SavedBooks';
 
 // Apollo Client setup
 const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_API_BASE_URL,
+  uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`, // Explicitly append /graphql
 });
 
 const authLink = setContext((_, { headers }) => {
