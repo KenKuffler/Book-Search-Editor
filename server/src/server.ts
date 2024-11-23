@@ -20,13 +20,20 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const allowedOrigins =
+  process.env.NODE_ENV === 'production'
+    ? ['https://book-search-editor-1.onrender.com']
+    : ['http://localhost:3000', 'https://book-search-editor-1.onrender.com'];
+
 app.use(
   cors({
-    origin: 'https://book-search-editor-1.onrender.com', // Replace with your frontend's Render URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Access-Control-Allow-Origin'],
   })
 );
+
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,6 +59,7 @@ app.use(
     context: async ({ req }) => {
       const authHeader = req.headers.authorization;
       if (authHeader) {
+        console.log('Authorization Header:', authHeader);
         const token = authHeader.split(' ')[1];
         try {
           const user = verifyToken(token); // Verify the token
